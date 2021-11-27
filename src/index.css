@@ -40,7 +40,7 @@ Variables
   --radius: 0.25rem;
   --light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  --max-width: 1170px;
+  --max-width: 1070px;
   --fixed-width: 620px;
 }
 /*
@@ -98,29 +98,7 @@ p {
   margin-bottom: 0.25rem;
   color: var(--clr-grey-5);
 }
-@media screen and (min-width: 800px) {
-  h1 {
-    font-size: 4rem;
-  }
-  h2 {
-    font-size: 2.5rem;
-  }
-  h3 {
-    font-size: 1.75rem;
-  }
-  h4 {
-    font-size: 1rem;
-  }
-  body {
-    font-size: 1rem;
-  }
-  h1,
-  h2,
-  h3,
-  h4 {
-    line-height: 1;
-  }
-}
+
 /*  global classes */
 
 /* main */
