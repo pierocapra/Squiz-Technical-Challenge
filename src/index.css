@@ -98,6 +98,9 @@ p {
   margin-bottom: 0.15rem;
   color: var(--clr-grey-5);
 }
+select {
+  font-size: 1rem;
+}
 
 /*  */
 /* main */
@@ -107,10 +110,6 @@ main {
   width: 90vw;
   margin: 3rem auto;
   max-width: var(--max-width);
-}
-
-.loading {
-  text-align: center;
 }
 
 .underline {
@@ -140,6 +139,11 @@ Container
   /* background-color: var(--clr-grey-9); */
 }
 
+.spinner-border {
+  margin-top: 5rem;
+  width: 6rem;
+  height: 6rem;
+}
 /*  */
 /* Filtering Area */
 /*  */

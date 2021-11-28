@@ -1,75 +1,19 @@
 import React, { useState, useEffect } from "react";
+
 import Title from "./components/Title";
 import Sorting from "./components/Sorting";
 import Filter from "./components/Filter";
 import CompaniesContainer from "./components/CompaniesContainer";
+import Loading from "./components/Loading";
 
 // GLOBAL VARIABLES
 const url = "https://my.api.mockaroo.com/accounts.json?key=3c370320";
-const url2 = "https://my.api.mockaroo.com/companies.json?key=2240b270";
-const apiSimulation = [
-  {
-    id: 1,
-    name: "Swoon",
-    country: "Italy",
-    industry: "Manufacture",
-    numberOfEmployees: 35,
-  },
-  {
-    id: 2,
-    name: "Marty",
-    country: "Poland",
-    industry: "n/a",
-    numberOfEmployees: 100,
-  },
-  {
-    id: 3,
-    name: "Gucci",
-    country: "Italy",
-    industry: "Textile",
-    numberOfEmployees: 135,
-  },
-  {
-    id: 4,
-    name: "Levis",
-    country: "US",
-    industry: "Textile",
-    numberOfEmployees: 1135,
-  },
-  {
-    id: 5,
-    name: "Marea",
-    country: "Greece",
-    industry: "Music",
-    numberOfEmployees: 15,
-  },
-  {
-    id: 6,
-    name: "Merrel",
-    country: "UK",
-    industry: "Manufacture",
-    numberOfEmployees: 305,
-  },
-  {
-    id: 7,
-    name: "Treble",
-    country: "US",
-    industry: "Audio",
-    numberOfEmployees: 3500,
-  },
-  {
-    id: 8,
-    name: "Merci",
-    country: "UK",
-    industry: "Charity",
-    numberOfEmployees: 30005,
-  },
-];
+const url2 = "https://my.api.mockaroo.com/companies2.json?key=2240b270";
 
 let data = [];
-// data = apiSimulation;
 
 function App() {
+  // states
   const [isLoading, setIsLoading] = useState(true);
   const [companyList, setCompanyList] = useState([]);
   const [country, setCountry] = useState("All");
@@ -79,14 +23,17 @@ function App() {
   const [isSorted, setIsSorted] = useState(false);
   const [sortedBy, setSortedBy] = useState("");
 
+  // Fetchdata from API
   const fetchData = () => {
-    fetch(url2)
+    fetch(url)
       .then((response) => response.json())
       .then((result) => {
         data = result;
         setCompanyList(data);
         populateCountryFilter(data);
         populateIndustryFilter(data);
+        setIsLoading(false);
+        return;
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -142,7 +89,7 @@ function App() {
   };
 
   //
-  //
+  // Sorting Logic
   //
 
   const setSortedArray = (newArray) => {
@@ -152,10 +99,6 @@ function App() {
   const setSortedDirection = (newArray) => {
     setCompanyList(newArray);
   };
-
-  //
-  // Sorting Logic
-  //
 
   const sortHandler = (e) => {
     setSortedBy(e.target.value);
@@ -183,25 +126,28 @@ function App() {
   return (
     <main>
       <Title />
-      <section className="container">
-        <div className="header">
-          <Filter
-            countryList={countryList}
-            industryList={industryList}
-            setCountryState={setCountryState}
-            setIndustryState={setIndustryState}
-            displayFilter={displayFilter}
-          />
-          <Sorting
-            sortHandler={sortHandler}
-            isSorted={isSorted}
-            sortDirection={sortDirection}
-            sortedBy={sortedBy}
-          />
-        </div>
+      {isLoading && <Loading />}
+      {!isLoading && (
+        <section className="container">
+          <div className="header">
+            <Filter
+              countryList={countryList}
+              industryList={industryList}
+              setCountryState={setCountryState}
+              setIndustryState={setIndustryState}
+              displayFilter={displayFilter}
+            />
+            <Sorting
+              sortHandler={sortHandler}
+              isSorted={isSorted}
+              sortDirection={sortDirection}
+              sortedBy={sortedBy}
+            />
+          </div>
 
-        <CompaniesContainer companyList={companyList} />
-      </section>
+          <CompaniesContainer companyList={companyList} />
+        </section>
+      )}
     </main>
   );
 }
