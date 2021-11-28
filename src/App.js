@@ -5,6 +5,7 @@ import Sorting from "./components/Sorting";
 import Filter from "./components/Filter";
 import CompaniesContainer from "./components/CompaniesContainer";
 import Loading from "./components/Loading";
+import Error from "./components/Error";
 
 // GLOBAL VARIABLES
 const url = "https://my.api.mockaroo.com/accounts.json?key=3c370320";
@@ -14,6 +15,7 @@ let data = [];
 
 function App() {
   // states
+  const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [companyList, setCompanyList] = useState([]);
   const [country, setCountry] = useState("All");
@@ -36,6 +38,7 @@ function App() {
         return;
       })
       .catch((error) => {
+        setError(true);
         console.error("Error:", error);
       });
   };
@@ -118,27 +121,32 @@ function App() {
   return (
     <main>
       <Title />
-      {isLoading && <Loading />}
-      {!isLoading && (
-        <section className="container">
-          <div className="header">
-            <Filter
-              countryList={countryList}
-              industryList={industryList}
-              setCountryState={setCountryState}
-              setIndustryState={setIndustryState}
-              displayFilter={displayFilter}
-            />
-            <Sorting
-              sortHandler={sortHandler}
-              isSorted={isSorted}
-              sortDirection={sortDirection}
-              sortedBy={sortedBy}
-            />
-          </div>
+      {error && <Error />}
+      {!error && (
+        <>
+          {isLoading && <Loading />}
+          {!isLoading && (
+            <section className="container">
+              <div className="header">
+                <Filter
+                  countryList={countryList}
+                  industryList={industryList}
+                  setCountryState={setCountryState}
+                  setIndustryState={setIndustryState}
+                  displayFilter={displayFilter}
+                />
+                <Sorting
+                  sortHandler={sortHandler}
+                  isSorted={isSorted}
+                  sortDirection={sortDirection}
+                  sortedBy={sortedBy}
+                />
+              </div>
 
-          <CompaniesContainer companyList={companyList} />
-        </section>
+              <CompaniesContainer companyList={companyList} />
+            </section>
+          )}
+        </>
       )}
     </main>
   );
