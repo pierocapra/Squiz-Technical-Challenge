@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import CompanyDetail from "./components/CompanyDetail";
 import Title from "./components/Title";
-
-import revArrows from "./img/Reverse-arrows.png";
+import Sorting from "./components/Sorting";
+import Filter from "./components/Filter";
+import CompaniesContainer from "./components/Companies";
 
 // GLOBAL VARIABLES
 const url = "https://my.api.mockaroo.com/accounts.json?key=3c370320";
@@ -95,6 +95,10 @@ function App() {
     fetchData();
   }, []);
 
+  //
+  //FIltering logic
+  //
+
   const populateCountryFilter = (data) => {
     const allCountries = [...new Set(data.map((item) => item.country))];
     setCountryList(allCountries);
@@ -108,7 +112,16 @@ function App() {
     setIndustryList(allIndFilterNA);
   };
 
+  const setCountryState = (value) => {
+    setCountry(value);
+  };
+
+  const setIndustryState = (value) => {
+    setIndustry(value);
+  };
+
   const displayFilter = () => {
+    setIsSorted(false);
     if (country === "All" && industry === "All") {
       setCompanyList(data);
       return;
@@ -125,6 +138,22 @@ function App() {
     }
   };
 
+  //
+  //
+  //
+
+  const setSortedArray = (newArray) => {
+    setCompanyList(newArray);
+  };
+
+  const setSortedDirection = (newArray) => {
+    setCompanyList(newArray);
+  };
+
+  //
+  // Sorting Logic
+  //
+
   const sortHandler = (e) => {
     const sortingParameter = e.target.value;
     console.log(sortingParameter);
@@ -135,104 +164,38 @@ function App() {
         ? -1
         : 0
     );
-
     setIsSorted(true);
-    setCompanyList(newArray);
+    setSortedArray(newArray);
   };
 
   const sortDirection = () => {
-    setCompanyList(companyList.reverse());
+    setSortedDirection(companyList.reverse());
   };
+
+  //
+  //
+  //
 
   return (
     <main>
       <Title />
       <section className="container">
-        <header>
-          <div className="filter-container">
-            <div className="filter-selection">
-              <label htmlFor="countries">Country</label>
-              <select
-                name="countries"
-                id="countries"
-                onChange={(e) => setCountry(e.target.value)}
-              >
-                <option value="All" defaultValue>
-                  All
-                </option>
-                {countryList.map((country, index) => {
-                  return (
-                    <option key={index} value={country}>
-                      {country}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <div className="filter-selection">
-              <label htmlFor="industries">Industry</label>
-              <select
-                name="industries"
-                id="industries"
-                onChange={(e) => setIndustry(e.target.value)}
-              >
-                <option value="All" defaultValue>
-                  All
-                </option>
-                {industryList.map((industry, index) => {
-                  return (
-                    <option key={index} value={industry}>
-                      {industry}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-            <button className="btn" onClick={displayFilter}>
-              Go
-            </button>
-          </div>
-          <div className="sorting-area" onClick={sortHandler}>
-            <span className="sort-by">Sort By:</span>
+        <div className="header">
+          <Filter
+            countryList={countryList}
+            industryList={industryList}
+            setCountryState={setCountryState}
+            setIndustryState={setIndustryState}
+            displayFilter={displayFilter}
+          />
+          <Sorting
+            sortHandler={sortHandler}
+            isSorted={isSorted}
+            sortDirection={sortDirection}
+          />
+        </div>
 
-            <div>
-              <div>
-                <input type="radio" id="name" name="sorting" value="name" /> {" "}
-                <label htmlFor="name">Name</label>
-              </div>
-              <div>
-                <input
-                  type="radio"
-                  id="noe"
-                  name="sorting"
-                  value="numberOfEmployees"
-                />
-                  <label htmlFor="noe">Number of Employees</label>
-              </div>
-            </div>
-
-            {isSorted && (
-              <button className="btn-invert" onClick={sortDirection}>
-                <img src={revArrows} alt="Reverse order" />
-              </button>
-            )}
-          </div>
-        </header>
-
-        {companyList.length <= 0 && (
-          <h3 className="alert-no-match">
-            No result is matching your criteria!
-          </h3>
-        )}
-        {companyList.length > 0 && (
-          <article className="results-container">
-            <ul>
-              {companyList.map((company) => {
-                return <CompanyDetail {...company} />;
-              })}
-            </ul>
-          </article>
-        )}
+        <CompaniesContainer companyList={companyList} />
       </section>
     </main>
   );
