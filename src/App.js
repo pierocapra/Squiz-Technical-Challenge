@@ -92,14 +92,6 @@ function App() {
   // Sorting Logic
   //
 
-  const setSortedArray = (newArray) => {
-    setCompanyList(newArray);
-  };
-
-  const setSortedDirection = (newArray) => {
-    setCompanyList(newArray);
-  };
-
   const sortHandler = (e) => {
     setSortedBy(e.target.value);
     const sortingParameter = e.target.value;
@@ -112,11 +104,11 @@ function App() {
         : 0
     );
     setIsSorted(true);
-    setSortedArray(newArray);
+    setCompanyList(newArray);
   };
 
   const sortDirection = () => {
-    setSortedDirection([...companyList].reverse());
+    setCompanyList([...companyList].reverse());
   };
 
   //
