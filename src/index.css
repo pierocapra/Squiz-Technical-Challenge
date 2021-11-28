@@ -212,7 +212,7 @@ Container
   flex-wrap: wrap;
   position: relative;
   color: var(--clr-grey-4);
-  margin-bottom: 1.8rem;
+  margin: 1.8rem 0;
 }
 .sort-by {
   width: 5rem;
@@ -230,10 +230,14 @@ Container
   margin: 0 auto;
   position: absolute;
   right: 0;
-  top: 5px;
+  /* top: 5px; */
 }
 .btn-invert img {
   width: 80%;
+}
+
+.btn-invert p {
+  font-size: 0.6rem;
 }
 
 .btn-invert:hover {
@@ -287,6 +291,8 @@ Container
   .filter-container {
     flex-direction: column;
     justify-content: flex-start;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid var(--clr-grey-9);
   }
   .sorting-area {
     margin-top: 2rem;

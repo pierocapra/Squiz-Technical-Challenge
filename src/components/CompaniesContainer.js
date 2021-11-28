@@ -11,7 +11,7 @@ const CompaniesContainer = ({ companyList }) => {
         <article className="results-container">
           <ul>
             {companyList.map((company) => {
-              return <CompanyDetail {...company} />;
+              return <CompanyDetail key={company.id} {...company} />;
             })}
           </ul>
         </article>

@@ -1,16 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 
 import revArrows from "../img/Reverse-arrows.png";
 
-const Sorting = ({ sortHandler, isSorted, sortDirection }) => {
+const Sorting = ({ sortHandler, isSorted, sortDirection, sortedBy }) => {
   return (
-    <div className="sorting-area" onClick={sortHandler}>
+    <div className="sorting-area">
       <span className="sort-by">Sort By:</span>
 
       <div>
         <div>
-          <input type="radio" id="name" name="sorting" value="name" /> {" "}
-          <label htmlFor="name">Name</label>
+          <input
+            type="radio"
+            id="name"
+            name="sorting"
+            value="name"
+            checked={sortedBy === "name"}
+            onChange={sortHandler}
+          />
+            <label htmlFor="name">Name</label>
         </div>
         <div>
           <input
@@ -18,6 +25,8 @@ const Sorting = ({ sortHandler, isSorted, sortDirection }) => {
             id="noe"
             name="sorting"
             value="numberOfEmployees"
+            checked={sortedBy === "numberOfEmployees"}
+            onChange={sortHandler}
           />
             <label htmlFor="noe">Number of Employees</label>
         </div>
@@ -26,6 +35,7 @@ const Sorting = ({ sortHandler, isSorted, sortDirection }) => {
       {isSorted && (
         <button className="btn-invert" onClick={sortDirection}>
           <img src={revArrows} alt="Reverse order" title="Reverse Order" />
+          <p>invert</p>
         </button>
       )}
     </div>

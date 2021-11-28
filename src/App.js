@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Title from "./components/Title";
 import Sorting from "./components/Sorting";
 import Filter from "./components/Filter";
-import CompaniesContainer from "./components/Companies";
+import CompaniesContainer from "./components/CompaniesContainer";
 
 // GLOBAL VARIABLES
 const url = "https://my.api.mockaroo.com/accounts.json?key=3c370320";
@@ -70,12 +70,14 @@ let data = [];
 // data = apiSimulation;
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   const [companyList, setCompanyList] = useState([]);
   const [country, setCountry] = useState("All");
   const [industry, setIndustry] = useState("All");
   const [countryList, setCountryList] = useState([]);
   const [industryList, setIndustryList] = useState([]);
   const [isSorted, setIsSorted] = useState(false);
+  const [sortedBy, setSortedBy] = useState("");
 
   const fetchData = () => {
     fetch(url2)
@@ -122,6 +124,7 @@ function App() {
 
   const displayFilter = () => {
     setIsSorted(false);
+    setSortedBy("");
     if (country === "All" && industry === "All") {
       setCompanyList(data);
       return;
@@ -155,6 +158,7 @@ function App() {
   //
 
   const sortHandler = (e) => {
+    setSortedBy(e.target.value);
     const sortingParameter = e.target.value;
     console.log(sortingParameter);
     const newArray = [...companyList].sort((a, b) =>
@@ -169,7 +173,7 @@ function App() {
   };
 
   const sortDirection = () => {
-    setSortedDirection(companyList.reverse());
+    setSortedDirection([...companyList].reverse());
   };
 
   //
@@ -192,6 +196,7 @@ function App() {
             sortHandler={sortHandler}
             isSorted={isSorted}
             sortDirection={sortDirection}
+            sortedBy={sortedBy}
           />
         </div>
 
