@@ -25,7 +25,7 @@ function App() {
 
   // Fetchdata from API
   const fetchData = () => {
-    fetch(url)
+    fetch(url2)
       .then((response) => response.json())
       .then((result) => {
         data = result;
