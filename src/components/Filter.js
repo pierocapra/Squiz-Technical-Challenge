@@ -48,7 +48,7 @@ const Filter = ({
         </select>
       </div>
       <button className="filter-btn" onClick={displayFilter}>
-        Go
+        Filter
       </button>
     </div>
   );
