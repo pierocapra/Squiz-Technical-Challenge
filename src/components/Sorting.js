@@ -35,7 +35,7 @@ const Sorting = ({ sortHandler, isSorted, sortDirection, sortedBy }) => {
       {isSorted && (
         <button className="btn-invert" onClick={sortDirection}>
           <img src={revArrows} alt="Reverse order" title="Reverse Order" />
-          <p>invert</p>
+          <p>reverse</p>
         </button>
       )}
     </div>
